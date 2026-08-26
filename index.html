@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>照片局部模糊工具</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="toolbar" aria-label="工具列">
+        <div class="top-row">
+          <div class="brand">
+            <div class="brand-mark">B</div>
+            <div>
+              <h1>照片局部模糊</h1>
+              <p id="imageInfo">尚未載入照片</p>
+            </div>
+          </div>
+
+          <label class="file-drop" for="imageInput">
+            <span>選擇照片</span>
+            <small>JPG、PNG、WebP</small>
+            <input id="imageInput" type="file" accept="image/*">
+          </label>
+
+          <select id="exportType" aria-label="匯出格式">
+            <option value="image/png">PNG 無損</option>
+            <option value="image/jpeg">JPG 高品質</option>
+          </select>
+
+          <button class="primary" id="downloadButton" type="button" disabled>下載圖片</button>
+        </div>
+
+        <div class="tool-matrix">
+          <div class="side-actions" aria-label="繪製模式">
+            <button class="active" id="paintMode" type="button">模糊筆</button>
+            <button id="rectangleMode" type="button">矩形</button>
+            <button id="ellipseMode" type="button">圓形</button>
+            <button id="eraseMode" type="button">橡皮擦</button>
+          </div>
+
+          <div class="preview-row">
+            <div class="preview-cell">
+              <div class="brush-preview" aria-hidden="true">
+                <span id="brushPreviewDot"></span>
+              </div>
+            </div>
+            <div class="preview-cell">
+              <div class="blur-preview" aria-hidden="true">
+                <div id="blurPreviewSample">
+                  <span>清晰文字</span>
+                  <i></i>
+                  <b></b>
+                </div>
+              </div>
+            </div>
+            <div class="preview-cell">
+              <div class="feather-preview" aria-hidden="true">
+                <span id="featherPreviewDot"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="slider-row">
+            <label class="slider-cell" for="brushSize">
+              <span>筆刷</span>
+              <output id="brushSizeValue">40.0 px</output>
+              <input id="brushSize" type="range" min="0" max="100" step="any" value="40">
+            </label>
+            <label class="slider-cell" for="blurAmount">
+              <span>模糊</span>
+              <output id="blurAmountValue">4.0 px</output>
+              <input id="blurAmount" type="range" min="0" max="10" step="any" value="4">
+            </label>
+            <label class="slider-cell" for="featherAmount">
+              <span>柔邊</span>
+              <output id="featherAmountValue">4.0 px</output>
+              <input id="featherAmount" type="range" min="0" max="15" step="any" value="4">
+            </label>
+          </div>
+
+          <div class="side-actions">
+            <button id="undoButton" type="button" disabled>復原</button>
+            <button id="clearButton" type="button" disabled>清除</button>
+          </div>
+        </div>
+      </aside>
+
+      <section class="workspace" aria-label="圖片編輯區">
+        <div class="canvas-wrap" id="canvasWrap">
+          <div id="brushCursor" aria-hidden="true"></div>
+          <div class="empty-state" id="emptyState">
+            <strong>把照片載入後，就可以用滑鼠塗抹要模糊的部分。</strong>
+            <span>匯出會保留原始解析度，不會因為畫面預覽縮小而降畫質。</span>
+          </div>
+          <canvas id="photoCanvas" aria-label="照片畫布" draggable="false"></canvas>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
